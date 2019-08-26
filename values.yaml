@@ -117,6 +117,14 @@ cp-kafka-connect:
   imagePullSecrets:
   #  - name: "regcred"
   heapOptions: "-Xms512M -Xmx512M"
+  persistence:
+    enabled: true
+    # storageClass: ""
+    jarMountsize: 1Gi
+    jarMountPath: /etc/kafka-connect/jars/
+    dataMountsize: 5Gi
+    jarMountPath: /var/lib/kafka/data/
+
   resources: {}
   ## If you do want to specify resources, uncomment the following lines, adjust them as necessary,
   ## and remove the curly braces after 'resources:'

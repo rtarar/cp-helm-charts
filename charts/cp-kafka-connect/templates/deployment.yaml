@@ -108,7 +108,22 @@ spec:
       {{- end }}
       volumes:
       - name: kafka-data
-      - name: kafka-jars
+      #added below for PVC Claims
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "cp-kafka-connect.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
+
+      - name: kafka-connect-jars
+      #added below for PVC Claims
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "cp-kafka-connect.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
       {{- if .Values.prometheus.jmx.enabled }}
       - name: jmx-config
         configMap:

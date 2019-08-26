@@ -39,6 +39,22 @@ heapOptions: "-Xms512M -Xmx512M"
 
 ## Additional env variables
 customEnv: {}
+persistence:
+  enabled: true
+
+  ## The size of the PersistentVolume to allocate to each Kafka Pod in the StatefulSet. For
+  ## production servers this number should likely be much larger.
+  size: 5Gi
+  accessModes: [ "ReadWriteOnce" ]
+
+  ## Kafka data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
