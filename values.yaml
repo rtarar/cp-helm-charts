@@ -120,10 +120,6 @@ cp-kafka-connect:
   persistence:
     enabled: true
     # storageClass: ""
-    jarMountsize: 1Gi
-    jarMountPath: /etc/kafka-connect/jars/
-    dataMountsize: 5Gi
-    jarMountPath: /var/lib/kafka/data/
 
   resources: {}
   ## If you do want to specify resources, uncomment the following lines, adjust them as necessary,
@@ -154,7 +150,7 @@ cp-ksql-server:
 ## Control Center
 ## ------------------------------------------------------
 cp-control-center:
-  enabled: true
+  enabled: false
   image: confluentinc/cp-enterprise-control-center
   imageTag: 5.2.0
   ## Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.

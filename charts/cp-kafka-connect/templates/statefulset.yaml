@@ -26,7 +26,7 @@ spec:
                     {{- if .Values.prometheus.jmx.enabled }}
                 prometheus.io/scrape: "true"
                 prometheus.io/port: {{ .Values.prometheus.jmx.port | quote }}
-                    {{- end }}
+                {{- end }}
             {{- end }}
         spec:
             containers:
@@ -102,51 +102,53 @@ spec:
                           {{- if .Values.jmx.port }}
                       - name: KAFKA_JMX_PORT
                         value: "{{ .Values.jmx.port }}"
-                          {{- end }}
+                    #{{- end }}
                 {{- if .Values.imagePullSecrets }}
             imagePullSecrets:
                 {{ toYaml .Values.imagePullSecrets | indent 8 }}
                 {{- end }}
             volumes:
-                {{- if .Values.prometheus.jmx.enabled }}
+                    {{- if .Values.prometheus.jmx.enabled }}
                 - name: jmx-config
                   configMap:
                       name: {{ template "cp-kafka-connect.fullname" . }}-jmx-configmap
-                {{- end }}
-                {{if .Values.persistence.enabled }}
+                    {{- end }}
+                    {{if .Values.persistence.enabled }}
                 - name: {{ template "cp-kafka-connect.fullname" . }}-jars
-                  emptyDir: {}
-                  persistentVolumeClaim:
-                  #  claimName: {{ template "cp-kafka-connect.fullname" . }}-jars
+                  #emptyDir: {}
+                    #persistentVolumeClaim:
+                    #  claimName: {{ template "cp-kafka-connect.fullname" . }}-jars
                 - name: {{ template "cp-kafka-connect.fullname" . }}-data
-                  emptyDir: {}
-                  #persistentVolumeClaim:
-                  #  claimName: {{ template "cp-kafka-connect.fullname" . }}-data
-                 {{end}}
+                  #emptyDir: {}
+                    #persistentVolumeClaim:
+
+                    #  claimName: {{ template "cp-kafka-connect.fullname" . }}-data
+                    {{end}}
                 {{- if .Values.nodeSelector }}
             nodeSelector:
                 {{ toYaml .Values.nodeSelector | indent 8 }}
                 {{- end }}
                 {{- if .Values.tolerations }}
             tolerations:
-                {{ toYaml .Values.tolerations | indent 8 }}
+        {{ toYaml .Values.tolerations | indent 8 }}
+        {{- end }}
     volumeClaimTemplates:
         - metadata:
-           name: {{ template "cp-kafka-connect.fullname" . }}-jars
+              name: {{ template "cp-kafka-connect.fullname" . }}-jars
           spec:
-            accessModes:
-               - ReadWriteOnce
-            resources:
-               requests:
-                  storage: 1Gi
-                storageClassName: gp2
+              accessModes:
+                  - ReadWriteOnce
+              storageClassName: gp2
+              resources:
+                  requests:
+                      storage: 1Gi
         - metadata:
               name: {{ template "cp-kafka-connect.fullname" . }}-data
           spec:
               accessModes:
                   - ReadWriteOnce
+              storageClassName: gp2
               resources:
                   requests:
                       storage: 1Gi
-                      storageClassName: gp2
-        {{- end }}
+

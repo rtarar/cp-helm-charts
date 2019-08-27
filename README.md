@@ -1,33 +1,44 @@
-# Confluent Open Source Helm Chart
+## Customized Confluent Open Source Helm Chart
 
-**The Confluent Platform Helm charts are in developer preview and are not supported for production use.**
+You can find the original Confluent project [here](https://github.com/confluentinc/cp-helm-charts)
 
-The [Confluent Platform Helm charts](https://github.com/confluentinc/cp-helm-charts) enable you to deploy Confluent Platform services on Kubernetes for development, test, and proof of concept environments.
+This has been customize dto our needs.
+
+
 
 ## Installing Charts
 
 ```
-helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
-helm repo update
+cd cp-helm-charts
+helm install . 
 ```
 
 ## Documentation
 
-The Confluent Helm Chart documentation is located at [docs.confluent.io](https://docs.confluent.io/current/quickstart/cp-helm-charts/docs/index.html).
+This install the charts to your existing K8s cluster.
 
-## Contributing
+Out of the boc the above commad should install/provision a
 
-We welcome any contributions:
 
-- Report all enhancements, bugs, and tasks as [GitHub issues](https://github.com/confluentinc/cp-helm-charts/issues)
-- Provide fixes or enhancements by opening pull requests in GitHub
+- 3 node Kafka , Zokeeper
+- Kafka and Kafka Connect deployed as Stateful sets
+- Dynamic PVC prvisioning for Zokeeper Kafka and Kafka Connect
 
-## Thanks
 
-Huge thanks to:
+##Tips
 
-- [Kafka helm chart](https://github.com/kubernetes/charts/tree/master/incubator/kafka)
-- [ZooKeeper helm chart](https://github.com/kubernetes/charts/tree/master/incubator/zookeeper)
-- [Schema Registry helm chart](https://github.com/kubernetes/charts/tree/master/incubator/schema-registry)
-- [kubernetes-kafka](https://github.com/Yolean/kubernetes-kafka)
-- [docker-kafka](https://github.com/solsson/dockerfiles)
+To delete a cluster 
+```
+helm delete <chartname>
+
+## You can list charts installed using 
+helm list
+
+
+##  to delete PVC's in one shot 
+kubectl  delete  pvc --selector=release=<chartname>
+
+``` 
+
+
+
