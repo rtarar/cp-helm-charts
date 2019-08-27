@@ -41,11 +41,9 @@ heapOptions: "-Xms512M -Xmx512M"
 customEnv: {}
 persistence:
   enabled: true
-
   ## The size of the PersistentVolume to allocate to each Kafka Pod in the StatefulSet. For
   ## production servers this number should likely be much larger.
-  size: 5Gi
-  accessModes: [ "ReadWriteOnce" ]
+
 
   ## Kafka data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
